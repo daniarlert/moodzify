@@ -9,6 +9,7 @@ readme = "README.md"
 python = "^3.11"
 django = "^4.2.5"
 psycopg = {extras = ["binary"], version = "^3.1.10"}
+environs = {extras = ["django"], version = "^9.5.0"}
 
 
 [tool.poetry.group.dev.dependencies]
@@ -21,3 +22,7 @@ ruff = "^0.0.289"
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.ruff]
+exclude = ["migrations"]
+ignore = ["E501"]
