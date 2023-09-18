@@ -19,4 +19,4 @@ class MoodEntry(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"Mood entry by {self.user} at {self.timestamp}"
+        return f"{self.timestamp}"

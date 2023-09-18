@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block title %}Moods{% endblock %}
+
+{% block content %}
+  {% for mood_entry in mood_entries %}
+    <ol>
+      <li>{{ mood_entry.mood_level }} - {{ mood_entry.notes }} - {{ mood_entry.timestamp }}</li>
+    </ol>
+  {% endfor %}
+{% endblock %}
