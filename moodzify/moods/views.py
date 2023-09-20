@@ -1,6 +1,7 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, ListView, UpdateView
+from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 
 from .forms import MoodEntryForm
 from .models import MoodEntry
@@ -15,16 +16,6 @@ class MoodListView(LoginRequiredMixin, ListView):
         return MoodEntry.objects.filter(user=self.request.user)
 
 
-class MoodDetailView(LoginRequiredMixin, UpdateView):
-    template_name = "moods/mood_create.html"
-    form_class = MoodEntry
-    success_url = reverse_lazy("mood_list")
-
-    def form_valid(self, form):
-        form.instance.user = self.request.user
-        return super().form_valid(form)
-
-
 class MoodCreateView(LoginRequiredMixin, CreateView):
     template_name = "moods/mood_create.html"
     form_class = MoodEntryForm
@@ -35,8 +26,23 @@ class MoodCreateView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
-class MoodUpdateView(LoginRequiredMixin, UpdateView):
+class MoodUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = MoodEntry
     template_name = "moods/mood_create.html"
     form_class = MoodEntryForm
     success_url = reverse_lazy("mood_list")
+
+    def test_func(self):
+        return self.get_object().user == self.request.user
+
+    def handle_no_permission(self):
+        return HttpResponseRedirect(reverse_lazy("mood_list"))
+
+
+class MoodDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = MoodEntry
+    template_name = "moods/mood_delete.html"
+    success_url = reverse_lazy("mood_list")
+
+    def test_func(self):
+        return self.get_object().user == self.request.user
