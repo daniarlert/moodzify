@@ -7,5 +7,6 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("users/", include("users.urls")),
     path("users/", include("django.contrib.auth.urls")),
-    path("moods/", include("mood_tracking.urls")),
+    path("moods/", include("moods.urls")),
+    path("__debug__/", include("debug_toolbar.urls")),
 ]
