@@ -6,7 +6,9 @@ from .models import CustomUser
 class CustomUserModelTest(TestCase):
     def setUp(self):
         self.user = CustomUser.objects.create_user(
-            username="testuser", email="test@example.com", password="testpassword"
+            username="testuser",
+            email="test@example.com",
+            password="testpassword",
         )
 
     def test_user_creation(self):

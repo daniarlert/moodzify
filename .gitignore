@@ -260,3 +260,10 @@ poetry.toml
 # LSP config files
 pyrightconfig.json
 
+/.idea/.gitignore
+/.idea/misc.xml
+/.idea/modules.xml
+/.idea/moodzify.iml
+/.idea/inspectionProfiles/profiles_settings.xml
+/.idea/vcs.xml
+/.idea/dataSources.xml

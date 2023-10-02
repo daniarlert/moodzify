@@ -46,3 +46,6 @@ class MoodDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
     def test_func(self):
         return self.get_object().user == self.request.user
+
+    def handle_no_permission(self):
+        return HttpResponseRedirect(reverse_lazy("mood_list"))
