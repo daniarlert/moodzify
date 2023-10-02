@@ -3,14 +3,15 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
-  {% if user.is_authenticated %}
-    Hi {{ user.username }}
-    <p>
-      <a href="{% url 'logout' %}" alt="Log Out">Log Out</a>
-    </p>
-  {% else %}
-      <a href="{% url 'login' %}" alt="Log In">Log In</a>
-      <a href="{% url 'signup' %}" alt="Sign Up">Sign Up</a>
-    </p>
-  {% endif %}
+    {% if user.is_authenticated %}
+        Hi {{ user.username }}
+        <p>
+            <a href="{% url 'mood_list' %}" alt="moods">Moods</a>
+            <a href="{% url 'logout' %}" alt="Log Out">Log Out</a>
+        </p>
+    {% else %}
+        <a href="{% url 'login' %}" alt="Log In">Log In</a>
+        <a href="{% url 'signup' %}" alt="Sign Up">Sign Up</a>
+        </p>
+    {% endif %}
 {% endblock %}

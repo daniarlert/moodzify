@@ -84,7 +84,7 @@ class UpdateViewTest(TestCase):
         response = self.client.get(self.url)
 
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, "moods/mood_create.html")
+        self.assertTemplateUsed(response, "moods/mood_update.html")
 
     def test_authenticated_user_can_update_mood_entry(self):
         self.client.login(username="testuser", password="testpassword")

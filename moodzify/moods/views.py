@@ -7,6 +7,16 @@ from .forms import MoodEntryForm
 from .models import MoodEntry
 
 
+class UserRequiredMixin(LoginRequiredMixin, UserPassesTestMixin):
+    success_url = reverse_lazy("mood_list")
+
+    def test_func(self):
+        return self.get_object().user == self.request.user
+
+    def handle_no_permission(self):
+        return HttpResponseRedirect(reverse_lazy("mood_list"))
+
+
 class MoodListView(LoginRequiredMixin, ListView):
     model = MoodEntry
     template_name = "moods/mood_list.html"
@@ -26,26 +36,12 @@ class MoodCreateView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
-class MoodUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+class UpdateView(UserRequiredMixin, UpdateView):
     model = MoodEntry
-    template_name = "moods/mood_create.html"
+    template_name = "moods/mood_update.html"
     form_class = MoodEntryForm
-    success_url = reverse_lazy("mood_list")
-
-    def test_func(self):
-        return self.get_object().user == self.request.user
-
-    def handle_no_permission(self):
-        return HttpResponseRedirect(reverse_lazy("mood_list"))
 
 
-class MoodDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+class DeleteView(UserRequiredMixin, DeleteView):
     model = MoodEntry
     template_name = "moods/mood_delete.html"
-    success_url = reverse_lazy("mood_list")
-
-    def test_func(self):
-        return self.get_object().user == self.request.user
-
-    def handle_no_permission(self):
-        return HttpResponseRedirect(reverse_lazy("mood_list"))
