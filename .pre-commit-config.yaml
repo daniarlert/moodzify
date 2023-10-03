@@ -9,11 +9,11 @@ repos:
       - id: isort
         args: ["--profile", "black", "--filter-files"]
   - repo: https://github.com/asottile/pyupgrade
-    rev: v3.13.0
+    rev: v3.14.0
     hooks:
       - id: pyupgrade
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.0.291
+    rev: v0.0.292
     hooks:
       - id: ruff
         args: [--fix, --exit-non-zero-on-fix]
@@ -23,3 +23,8 @@ repos:
       - id: poetry-check
       - id: poetry-lock
       - id: poetry-export
+        args: [ "-f", "requirements.txt", "-o", "requirements.txt", "--without-hashes" ]
+        verbose: true
+      - id: poetry-export
+        args: [ "--with", "dev", "-f", "requirements.txt", "-o", "requirements.dev.txt", "--without-hashes" ]
+        verbose: true
