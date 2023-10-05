@@ -1,0 +1,38 @@
+version: '3.8'
+
+volumes:
+  moodzify_local_postgres_data: {}
+  moodzify_local_postgres_data_backups: {}
+
+services:
+  django:
+    build:
+      context: .
+      dockerfile: ./compose/local/Dockerfile
+    image: moodzify_local_django
+    container_name: moodzify_local_django
+    depends_on:
+      - postgres
+      - mailpit
+    volumes:
+      - ./moodzify:/moodzify:z
+    env_file:
+      - ./.env
+    ports:
+      - "8000:8000"
+    command: "python manage.py runserver 0.0.0.0:8000"
+
+  postgres:
+    image: postgres:16.0-alpine3.18
+    container_name: moodzify_local_postgres
+    volumes:
+      - moodzify_local_postgres_data:/var/lib/postgresql/data
+      - moodzify_local_postgres_data_backups:/backups
+    env_file:
+      - ./.env
+
+  mailpit:
+    image: axllent/mailpit:v1.9.4
+    container_name: moodzify_local_mailpit
+    ports:
+      - "8025:8025"

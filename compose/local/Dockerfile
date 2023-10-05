@@ -2,7 +2,7 @@
 FROM python:3.11.6-slim-bookworm as python
 
 # Build stage
-FROM python as python-build-stage
+FROM python as build-stage
 
 # Install apt packages
 RUN apt-get update && apt-get install --no-install-recommends -y \
@@ -16,10 +16,10 @@ RUN pip wheel --wheel-dir /wheels \
     -r requirements.dev.txt
 
 # Run stage
-FROM python as python-run-stage
+FROM python as run-stage
 
 # Set env variables
-ENV APP_HOME /app
+ENV APP_HOME /moodzify
 ENV PORT 8000
 ENV PYTHONUNBUFFERED 1
 ENV PYTHONDONTWRITEBYTECODE 1
@@ -30,25 +30,18 @@ EXPOSE $PORT
 # Set working directory
 WORKDIR $APP_HOME
 
-# Update and clean-up apt packages
+# Install required system dependencies
 RUN apt-get update && apt-get install --no-install-recommends -y \
+  # cleaning up unused files
   && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false \
   && rm -rf /var/lib/apt/lists/*
 
 # Copy dependency wheels from the build stage
-COPY --from=python-build-stage /wheels /wheels/
+COPY --from=build-stage /wheels /wheels/
 
 # Install Python dependencies
 RUN pip install --no-cache-dir --no-index --find-links=/wheels/ /wheels/* \
   && rm -rf /wheels/
 
-# Set start script
-COPY ./compose/local/start.sh $APP_HOME/start.sh
-RUN sed -i 's/\r$//g' $APP_HOME/start.sh
-RUN chmod +x $APP_HOME/start.sh
-
 # Copy application code
-COPY ./moodzify/ $APP_HOME/
-
-# Set entrypoint for the container
-ENTRYPOINT ["./start.sh"]
+COPY ./moodzify $APP_HOME
