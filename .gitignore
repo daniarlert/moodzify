@@ -267,3 +267,4 @@ pyrightconfig.json
 /.idea/inspectionProfiles/profiles_settings.xml
 /.idea/vcs.xml
 /.idea/dataSources.xml
+/moodzify/staticfiles/

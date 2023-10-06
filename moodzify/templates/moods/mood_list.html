@@ -5,12 +5,12 @@
 {% block content %}
     <a href="{% url 'mood_new' %}" alt="Register current mood">Register current mood</a>
     {% for mood_entry in mood_list %}
-        <ol>
+        <ul>
             <li>
                 {{ mood_entry.mood_level }} - {{ mood_entry.notes }} - {{ mood_entry.timestamp }}
                 <a href="{% url 'mood_update' mood_entry.id %}" alt="Update entry">Update</a>
                 <a href="{% url 'mood_delete' mood_entry.id %}" alt="Delete entry">Delete</a>
             </li>
-        </ol>
+        </ul>
     {% endfor %}
 {% endblock %}

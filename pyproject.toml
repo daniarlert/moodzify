@@ -10,6 +10,7 @@ python = "^3.11"
 django = "^4.2.5"
 psycopg = {extras = ["binary"], version = "^3.1.10"}
 environs = {extras = ["django"], version = "^9.5.0"}
+whitenoise = {extras = ["brotli"], version = "^6.5.0"}
 
 
 [tool.poetry.group.dev.dependencies]
