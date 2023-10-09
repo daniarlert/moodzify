@@ -1,5 +1,6 @@
 from django.core.management.base import BaseCommand
-from moods.models import MoodEntry
+
+from ...models import MoodEntry
 
 
 class Command(BaseCommand):

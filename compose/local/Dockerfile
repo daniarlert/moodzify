@@ -44,4 +44,4 @@ RUN pip install --no-cache-dir --no-index --find-links=/wheels/ /wheels/* \
   && rm -rf /wheels/
 
 # Copy application code
-COPY ./moodzify $APP_HOME
+COPY . .
