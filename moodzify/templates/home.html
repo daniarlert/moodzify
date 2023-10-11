@@ -4,14 +4,15 @@
 
 {% block content %}
     {% if user.is_authenticated %}
-        Hi {{ user.username }}
+        Hi {{ user.email }}
         <p>
-            <a href="{% url 'mood_list' %}" alt="moods">Moods</a>
-            <a href="{% url 'logout' %}" alt="Log Out">Log Out</a>
+            <a href="{% url 'mood_list' %}">Moods</a>
+            <a href="{% url 'account_logout' %}">Log Out</a>
         </p>
     {% else %}
-        <a href="{% url 'login' %}" alt="Log In">Log In</a>
-        <a href="{% url 'signup' %}" alt="Sign Up">Sign Up</a>
+        <p>
+            <a href="{% url 'account_login' %}">Log In</a>
+            <a href="{% url 'account_signup' %}">Sign Up</a>
         </p>
     {% endif %}
 {% endblock %}

@@ -21,10 +21,14 @@ class MoodEntry(models.Model):
     )
     user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
     mood_level = models.IntegerField(
-        choices=MOOD_LEVEL_CHOICES, blank=False, null=False
+        choices=MOOD_LEVEL_CHOICES,
+        blank=False,
+        null=False,
     )
     notes = models.TextField(blank=True, null=True)
-    timestamp = models.DateTimeField(auto_now_add=True)
+    timestamp = models.DateTimeField(
+        auto_now_add=True,
+    )
 
     def get_absolute_url(self):
         return reverse("mood_detail", args=[str(self.id)])

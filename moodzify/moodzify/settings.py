@@ -53,8 +53,12 @@ INSTALLED_APPS = [
     # Static files
     "whitenoise.runserver_nostatic",
     "django.contrib.staticfiles",
+    # 3rd party
+    "allauth",
+    "allauth.account",
+    "allauth.socialaccount",
     # Local
-    "users",
+    "accounts",
     "moods",
 ]
 
@@ -69,6 +73,7 @@ MIDDLEWARE = [
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
+    "allauth.account.middleware.AccountMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
@@ -183,7 +188,26 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 # Custom authentication
 # https://docs.djangoproject.com/en/4.2/topics/auth/customizing/
 
-AUTH_USER_MODEL = "users.CustomUser"
+AUTH_USER_MODEL = "accounts.CustomUser"
 
 LOGIN_REDIRECT_URL = "home"
 LOGOUT_REDIRECT_URL = "home"
+
+# All-auth
+# https://allauth.org/
+
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+
+AUTHENTICATION_BACKENDS = (
+    "django.contrib.auth.backends.ModelBackend",
+    "allauth.account.auth_backends.AuthenticationBackend",
+)
+
+SITE_ID = 1
+
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = True
+ACCOUNT_SESSION_REMEMBER = True
+ACCOUNT_AUTHENTICATION_METHOD = "email"
+ACCOUNT_UNIQUE_EMAIL = True
