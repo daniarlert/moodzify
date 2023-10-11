@@ -185,6 +185,18 @@ STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
+# Email backend
+# https://docs.djangoproject.com/en/4.2/ref/settings/#email-backend
+
+EMAIL_HOST = env("EMAIL_HOST", default="mailpit")
+EMAIL_PORT = 1025
+EMAIL_BACKEND = env(
+    "DJANGO_EMAIL_BACKEND",
+    default="django.core.mail.backends.smtp.EmailBackend",
+)
+
+EMAIL_TIMEOUT = 5
+
 # Custom authentication
 # https://docs.djangoproject.com/en/4.2/topics/auth/customizing/
 
@@ -195,8 +207,6 @@ LOGOUT_REDIRECT_URL = "home"
 
 # All-auth
 # https://allauth.org/
-
-EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
 AUTHENTICATION_BACKENDS = (
     "django.contrib.auth.backends.ModelBackend",
